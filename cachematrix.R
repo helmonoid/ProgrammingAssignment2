@@ -1,25 +1,31 @@
 ## This file contains two functions to create a special matrix
-# object and cache its inverse.
+# object and cache its inverse.In order to use it, create a 
+## cacheable matrix, m<- makeCacheMatrix( ). initialize with a 
+## matrix that is easy to inspect e.g. m$set( matrix( c(0, 4, 4, 0 ), 2, 2))
+## m$get() retrives the matrix part of the object.
+## test the inverse cacher with cacheSolve(m), repeat cacheSolve(m)
+## It shall display: "getting cached data" and print the cached data.
 
+## ----------------------------------------------------------------------------
 
 ## This function creates a special "matrix" object that can cache its inverse.
 
-makeCacheMatrix <- function(x = matrix()) {
+makeCacheMatrix <- function(y = matrix()) {
         
         m <- NULL
         
-        set <- function(y){
-                x <<- y
+        set <- function(matrix){
+                y <<- matrix
                 m <<- NULL
         }
         get <- function(){
-                x
+                y
         }
         setinverse <- function(inverse){
-                i <<- inverse
+                m <<- inverse
         }
         getinverse <- function() {
-                i
+                m
         }
         
         list(set= set, get = get,
@@ -35,19 +41,19 @@ makeCacheMatrix <- function(x = matrix()) {
 
 cacheSolve <- function(x, ...) {
         
-        i <- x$getinverse()
+        y <- x$getinverse()
         
-        if (!is.null(i)){
+        if (!is.null(y)){
                 message("getting cached data")
-                return(i)
+                return(y)
         }
         data <- x$get()
 
-        i <- solve(data, ...)
+        y <- solve(data, ...)
         
-        x$setinverse(i)
+        x$setinverse(y)
         
-        i
+        y
 }
         
 
